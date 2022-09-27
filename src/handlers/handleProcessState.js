@@ -1,4 +1,4 @@
-const handleProcessState = (elements, processState) => {
+const handleProcessState = (elements, i18nInstance, processState) => {
   switch (processState) {
     case 'successful':
       if (!document.querySelector('.card-title')) {
@@ -6,7 +6,7 @@ const handleProcessState = (elements, processState) => {
         cardBody.classList.add('card-body');
         const cardTitle = document.createElement('h2');
         cardTitle.classList.add('card-title', 'h4');
-        cardTitle.textContent = 'Фиды';
+        cardTitle.textContent = i18nInstance.t('content.feeds');
         cardBody.appendChild(cardTitle);
         elements.feeds.appendChild(cardBody);
       }

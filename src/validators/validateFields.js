@@ -1,16 +1,22 @@
 import * as yup from 'yup';
+import { setLocale } from 'yup';
 import _ from 'lodash';
 
 const createYupSchema = (urls) => yup.object().shape({
-  input: yup.string().url('Ссылка должна быть валидным URL').notOneOf(
-    [urls],
-    'RSS уже существует',
-  ),
+  input: yup.string().url().notOneOf([urls]),
 });
 
-const validateFields = (fields, urls) => {
+const validateFields = (fields, urls, i18nInstance) => {
   try {
-    createYupSchema(urls).validateSync(fields, { abortEarly: false });
+    setLocale({
+      mixed: {
+        notOneOf: i18nInstance.t('validation.errors.urlAlreadyExists'),
+      },
+      string: {
+        url: i18nInstance.t('validation.errors.invalidUrl'),
+      },
+    });
+    createYupSchema(urls, i18nInstance).validateSync(fields, { abortEarly: false });
     return {};
   } catch (e) {
     return _.keyBy(e.inner, 'path');

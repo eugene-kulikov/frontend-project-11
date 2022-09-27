@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const renderErrors = (elements, errors, prevErrors) => {
+const renderErrors = (elements, i18nInstance, errors, prevErrors) => {
   Object.entries(elements.fields).forEach(([fieldName, fieldElement]) => {
     const error = errors[fieldName];
     const fieldHadError = _.has(prevErrors, fieldName);
@@ -11,7 +11,7 @@ const renderErrors = (elements, errors, prevErrors) => {
       fieldElement.classList.remove('is-invalid');
       feedbackElement.classList.remove('text-danger');
       feedbackElement.classList.add('text-success');
-      feedbackElement.textContent = 'RSS успешно загружен';
+      feedbackElement.textContent = i18nInstance.t('loading.uploadSuccess');
       return;
     }
 
