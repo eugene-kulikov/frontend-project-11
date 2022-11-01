@@ -1,14 +1,14 @@
 import handleProcessState from '../handlers/handleProcessState.js';
 import renderErrors from './renderErrors.js';
 
-const render = (elements, i18nInstance) => (path, value, prevValue) => {
+const render = (elements, state, i18nInstance) => (path, value, prevValue) => {
   switch (path) {
     case 'lng':
       i18nInstance.changeLanguage(value).then(() => render(elements, i18nInstance));
       break;
 
     case 'form.processState':
-      handleProcessState(elements, i18nInstance, value);
+      handleProcessState(elements, state, i18nInstance, value);
       break;
 
     case 'form.errors':
