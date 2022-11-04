@@ -8,8 +8,8 @@ const loadContent = (state, url) => {
   axios.get(PROXY + encodeURIComponent(url))
     .then((response) => {
       const { feeds, posts } = parserRSS(response.data.contents);
-      state.feeds = [...state.feeds, feeds];
-      state.posts = [...state.posts, ...posts];
+      state.feeds = [feeds, ...state.feeds];
+      state.posts = [...posts, ...state.posts];
       state.urls = [...state.urls, url];
       state.form.errors = {};
       state.form.processState = 'successful';

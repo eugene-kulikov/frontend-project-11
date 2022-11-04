@@ -9,7 +9,7 @@ export default (state, i18nInstance) => `
                     <h3 class="h6 m-0">${title}</h3>
                     <p class="m-0 small text-black-50">${description}</p>
                 </li>
-              `)}
+              `).join('')}
         </ul>
     </div>
 `;
