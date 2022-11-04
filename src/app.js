@@ -1,15 +1,13 @@
-import onChange from 'on-change';
 import i18n from 'i18next';
-import axios from 'axios';
 import _ from 'lodash';
 import validateFields from './validators/validateFields.js';
-import render from './renderers/render.js';
-import resources from './locales/index.js';
-import parserRSS from './parsers/parserRSS.js';
+import setLocales from './locales/index.js';
+import initialState from './constants/initialState.js';
+import createWatchedState from './watcher.js';
+import loadContent from './actions/loadContent.js';
+import refreshContent from './actions/refreshContent.js';
 
 export default () => {
-  const defaultLanguage = 'ru';
-
   const elements = {
     form: document.querySelector('form'),
     container: document.querySelector('.container-xxl'),
@@ -22,61 +20,29 @@ export default () => {
   };
 
   const i18nInstance = i18n.createInstance();
-
-  i18nInstance.init({
-    lng: defaultLanguage,
-    debug: false,
-    resources,
-  })
+  i18nInstance.init(setLocales())
     .then(() => {
-      const initialState = {
-        lng: defaultLanguage,
-        urls: [],
-        form: {
-          processState: 'filling',
-          urls: [],
-          feeds: [],
-          errors: {},
-          fields: {
-            input: '',
-          },
-        },
-      };
-
-      const watchedState = onChange(initialState, render(elements, initialState, i18nInstance));
+      const state = createWatchedState(initialState, elements, i18nInstance);
+      refreshContent(state);
 
       Object.entries(elements.fields).forEach(([fieldName, fieldElement]) => {
         fieldElement.addEventListener('input', (e) => {
           const { value } = e.target;
-          watchedState.form.fields[fieldName] = value;
+          state.form.fields[fieldName] = value;
         });
       });
 
       elements.form.addEventListener('submit', (e) => {
         e.preventDefault();
+        state.form.processError = null;
 
-        const errors = validateFields(watchedState.form.fields, watchedState.urls, i18nInstance);
+        const validationErrors = validateFields(state.form.fields, state.urls, i18nInstance);
 
-        if (!_.isEmpty(errors)) {
-          watchedState.form.errors = errors;
+        if (!_.isEmpty(validationErrors)) {
+          state.form.errors = validationErrors;
         } else {
-          watchedState.form.errors = [];
-          const lastUrl = watchedState.form.fields.input;
-          watchedState.urls = [...watchedState.urls, lastUrl];
-          axios.get(`https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(lastUrl)}`)
-            .then((response) => parserRSS(response.data.contents))
-            .then((parsedData) => {
-              console.log('watchedState before adding', watchedState.form.feeds);
-              watchedState.form.feeds = [...watchedState.form.feeds, parsedData];
-              watchedState.form.processState = 'successful';
-              console.log('watchedState after adding', watchedState.form.feeds);
-            })
-            .catch(() => {
-              console.log('error parser');
-              watchedState.form.processState = 'invalid';
-            });
-          elements.fields.input.value = '';
-          elements.fields.input.focus();
+          const lastUrl = state.form.fields.input;
+          loadContent(state, lastUrl);
         }
       });
     })

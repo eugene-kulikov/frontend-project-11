@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const renderErrors = (elements, i18nInstance, errors, prevErrors) => {
+const renderFormErrors = (elements, errors, prevErrors, i18nInstance) => {
   Object.entries(elements.fields).forEach(([fieldName, fieldElement]) => {
     const error = errors[fieldName];
     const fieldHadError = _.has(prevErrors, fieldName);
@@ -27,4 +27,4 @@ const renderErrors = (elements, i18nInstance, errors, prevErrors) => {
   });
 };
 
-export default renderErrors;
+export default renderFormErrors;

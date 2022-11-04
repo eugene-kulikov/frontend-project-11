@@ -8,6 +8,7 @@ parserOptions:
   sourceType: module
 rules:
   no-console: 0
+  no-param-reassign: [2, { "props": false }]
   import/extensions:
     - error
     - ignorePackages

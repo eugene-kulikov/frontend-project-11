@@ -10,10 +10,10 @@ const validateFields = (fields, urls, i18nInstance) => {
   try {
     setLocale({
       mixed: {
-        notOneOf: i18nInstance.t('validation.errors.urlAlreadyExists'),
+        notOneOf: i18nInstance.t('errors.validation.urlAlreadyExists'),
       },
       string: {
-        url: i18nInstance.t('validation.errors.invalidUrl'),
+        url: i18nInstance.t('errors.validation.invalidUrl'),
       },
     });
     createYupSchema(urls, i18nInstance).validateSync(fields, { abortEarly: false });

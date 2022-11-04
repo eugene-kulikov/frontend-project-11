@@ -1,0 +1,3 @@
+const REFRESH_INTERVAL = 5000;
+
+export default REFRESH_INTERVAL;
