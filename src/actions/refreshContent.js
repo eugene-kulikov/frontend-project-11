@@ -1,4 +1,5 @@
 import axios from 'axios';
+import _ from 'lodash';
 import PROXY from '../constants/proxy.js';
 import REFRESH_INTERVAL from '../constants/refreshInterval.js';
 import parserRSS from '../parsers/parserRSS.js';
