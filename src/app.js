@@ -14,6 +14,11 @@ export default () => {
     feedbackElement: document.querySelector('.feedback'),
     feeds: document.querySelector('.feeds'),
     posts: document.querySelector('.posts'),
+    modal: {
+      title: document.querySelector('.modal-title'),
+      description: document.querySelector('.modal-body'),
+      link: document.querySelector('.full-article'),
+    },
     fields: {
       input: document.getElementById('url-input'),
     },

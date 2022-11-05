@@ -2,6 +2,7 @@ const initialState = {
   urls: [],
   feeds: [],
   posts: [],
+  viewedPosts: [],
   form: {
     processState: 'filling',
     processError: null,

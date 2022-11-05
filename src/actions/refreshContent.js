@@ -16,7 +16,7 @@ const refreshContent = (state) => {
           return [...acc, ...posts];
         }, []);
         const newPosts = _.differenceBy(postsLoaded, postsAll, 'title')
-          .map((post) => ({ ...post }));
+          .map((post) => ({ ...post, id: _.uniqueId() }));
         if (newPosts.length !== 0) {
           state.posts = [...newPosts, ...state.form.feeds.posts];
           state.form.processState = 'loadedNewPosts';

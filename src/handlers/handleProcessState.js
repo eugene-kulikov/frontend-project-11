@@ -1,5 +1,6 @@
 import renderFeeds from '../renderers/renderFeeds.js';
 import renderPosts from '../renderers/renderPosts.js';
+import renderModal from '../renderers/renderModal.js';
 
 const handleProcessState = (state, elements, processState, i18nInstance) => {
   switch (processState) {
@@ -9,6 +10,11 @@ const handleProcessState = (state, elements, processState, i18nInstance) => {
 
       elements.feeds.innerHTML = listOfFeeds;
       elements.posts.innerHTML = postsOfFeeds;
+
+      elements.posts.querySelectorAll('button').forEach((btn) => {
+        btn.addEventListener('click', renderModal(state, elements, btn));
+        btn.removeEventListener('click', renderModal(state, elements, btn));
+      });
 
       elements.fields.input.value = '';
       elements.fields.input.focus();
