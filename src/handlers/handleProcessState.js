@@ -5,11 +5,11 @@ import renderModal from '../renderers/renderModal.js';
 const handleProcessState = (state, elements, processState, i18nInstance) => {
   switch (processState) {
     case 'successful': {
-      const listOfFeeds = renderFeeds(state, i18nInstance);
-      const postsOfFeeds = renderPosts(state, i18nInstance);
+      const feeds = renderFeeds(state, i18nInstance);
+      const posts = renderPosts(state, i18nInstance);
 
-      elements.feeds.innerHTML = listOfFeeds;
-      elements.posts.innerHTML = postsOfFeeds;
+      elements.feeds.innerHTML = feeds;
+      elements.posts.innerHTML = posts;
 
       elements.posts.querySelectorAll('button').forEach((btn) => {
         btn.addEventListener('click', renderModal(state, elements, btn));
@@ -22,8 +22,8 @@ const handleProcessState = (state, elements, processState, i18nInstance) => {
     }
 
     case 'loadedNewPosts': {
-      const postsOfFeeds = renderPosts(state, i18nInstance);
-      elements.posts.innerHTML = postsOfFeeds;
+      const posts = renderPosts(state, i18nInstance);
+      elements.posts.innerHTML = posts;
       break;
     }
 
