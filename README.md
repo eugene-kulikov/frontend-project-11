@@ -9,4 +9,20 @@
 
 [Rss Reader](https://frontend-project-11-flame.vercel.app/)  – сервис для агрегации RSS-потоков, с помощью которых удобно читать разнообразные источники, например, блоги. Он позволяет добавлять неограниченное количество RSS-лент, сам их обновляет и добавляет новые записи в общий поток.
 
+## Установка
+1. Убедитесь, что вы установили [Node.js](https://nodejs.org/en/) не ниже версии 12: ```node -v```.
+2. Склонируйте репозиторий: ```git@github.com:Ecool88/frontend-project-11.git```.
+3. Смените каталог на frontend-project-11.
+4. Для установки зависимостей проекта запустите команду: ```make install```.
+5. Для старта приложения запустите команду: ```make develop```.
+
+```shell
+$ git@github.com:Ecool88/frontend-project-11.git
+$ cd frontend-project-11
+$ make install
+$ make develop
+```
+
+### Пример приложения [Rss Reader](https://frontend-project-11-flame.vercel.app/)
+
 ![Пример](https://raw.githubusercontent.com/Ecool88/frontend-project-11/main/src/assets/images/example.png)
